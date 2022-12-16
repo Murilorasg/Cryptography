@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Algoritmo de Cesar</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: sans-serif;
+            font-size: 16px;
+            line-height: 1.5;
+            text-align: center;
+            background-color: lightcoral;
+            height: 100%;
+        }
+        .container {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+        }
+        .elements {
+            margin: 50px;
+            display: block;
+            height: 100%;
+            width: 40%;
+            margin-left: auto;
+            margin-right: auto;
+            align-items: center;
+            border-radius: 5px;
+            text-align: center;
+        }
+        .elements input{
+            margin: 100px;
+            margin-top: 30px;
+            margin-bottom: 30px;
+        }
+        #avanca{
+            height: 20%;
+            display: flex;
+            float: right;
+            margin-right: 20px;
+        }
+        #retorna{
+            height: 20%;
+            display: flex;
+            float: left;
+            margin-left: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="elements">
+            <h2>Cifra de de Vigenère</h2>
+            <h3>
+                Defina a senha
+            </h3>
+            <p><input type="text" id="password" size="50" style="text-align: center;" placeholder="Mensagem"
+                onkeypress="return ((event.charCode >= 65 && event.charCode <= 90)
+                ||(event.charCode >= 97 && event.charCode <= 122))"></p>
+            <h3>
+                Digite sua mensagem aqui
+            </h3>
+            <input type="text" id="msg" size="50" style="text-align: center;" placeholder="Mensagem"
+            onkeypress="return ((event.charCode >= 65 && event.charCode <= 90)
+            ||(event.charCode >= 97 && event.charCode <= 122)||(event.charCode = 32))">
+            <button onclick="chipher_me()">Criptografar</button>
+            <input type="text" id="cripto" size="50" style="text-align: center;" readonly placeholder="Criptografia">
+        </div>
+    </div>
+    <footer>
+        <a href="algoritimo_cesar.html"><button id="retorna"><</button></a>
+        <a href="decript_cesar.html"><button id="avanca">></button></a>
+    </footer>
+    <script>
+        function chipher_me() {
+            var alphabet = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o',
+        'p','q','r','s','t','u','v','x','w','y','z'];
+            var msg = document.getElementById("msg").value;
+            var pass = document.getElementById("password").value;
+            var msg2;
+            var pass2;
+            var cripto="";
+            var cont_msg = 0;
+            var cont_pass = 0;
+
+            pass2 = pass.replace(/\s/g, '');
+            msg2 = msg.replace(/\s/g, '');
+
+
+            while((cont_msg<=(msg2.length-1))&&(cont_pass<(pass2.length))){
+
+                for(var acha_l_msg = 0; acha_l_msg <=(alphabet.length-1); acha_l_msg++){
+
+                    if(msg2[cont_msg]==alphabet[acha_l_msg]){
+
+                            for(var acha_l_pass = 0; acha_l_pass <=(alphabet.length-1); acha_l_pass++){
+
+                                if(pass2[cont_pass]==alphabet[acha_l_pass]){
+
+                    cripto=replaceByIndex(cripto,cont_msg,alphabet[(acha_l_msg+acha_l_pass+1)%26]);
+
+                                }
+
+                            }
+                            
+                        }
+                    }
+
+                                cont_pass++;
+                                cont_msg++;
+
+                if((cont_pass==pass2.length)&&(cont_msg!=msg2.length-1)){
+                    cont_pass=0;
+                    }
+                }
+
+        document.getElementById("cripto").value = cripto;
+    }
+
+    function replaceByIndex(str, index, replacement) {
+    return str.substr(0, index) + replacement + str.substr(index + replacement.length);
+}
+    </script>
+</body>
+</html>

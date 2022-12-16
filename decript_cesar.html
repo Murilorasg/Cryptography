@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Algoritmo de Cesar</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: sans-serif;
+            font-size: 16px;
+            line-height: 1.5;
+            text-align: center;
+            background-color: lightcoral;
+            height: 100%;
+        }
+        .container {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+        }
+        .elements {
+            margin: 50px;
+            display: block;
+            height: 100%;
+            width: 40%;
+            margin-left: auto;
+            margin-right: auto;
+            align-items: center;
+            border-radius: 5px;
+            text-align: center;
+        }
+        .elements input{
+            margin: 100px;
+            margin-top: 30px;
+            margin-bottom: 30px;
+        }
+        .elements textarea{
+            margin: 100px;
+            margin-top: 30px;
+            margin-bottom: 30px;
+        }
+        #retorna{
+            height: 20%;
+            display: flex;
+            float: left;
+            margin-left: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="elements">
+            <h2>Cifra de César - Quebra</h2>
+            <h3>
+                Digite a mensagem a ser quebrada
+            </h3>
+            <input type="text" id="msg" size="50" style="text-align: center;" length="500" placeholder="Mensagem"
+            onkeypress="return ((event.charCode >= 65 && event.charCode <= 90)
+            ||(event.charCode >= 97 && event.charCode <= 122)||(event.charCode = 32))">
+            <button onclick="dechipher_me()">Quebrar</button>
+            <textarea id="cripto" size="50" style="text-align: center;" readonly cols="50" rows="10"></textarea>
+        </div>
+    </div>
+    <footer>
+        <a href="algoritimo_vigenere.html"><button id="retorna"><</button></a>
+    </footer>
+    <script>
+        function dechipher_me() {
+            var alphabet = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o',
+        'p','q','r','s','t','u','v','x','w','y','z'];
+            var msg = document.getElementById("msg").value;
+            msg = msg.replace(/\s/g, '');
+            msg = msg.toLowerCase();
+            var decript="";
+            var cont_letras = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+            var maior_letra=0;
+            var dif = 0;
+            
+
+           for (var cont = 0; cont <= (msg.length-1); cont++) {
+
+            switch (msg[cont]){
+
+                case 'a': cont_letras[0]++; break;
+                case 'b': cont_letras[1]++; break;
+                case 'c': cont_letras[2]++; break;
+                case 'd': cont_letras[3]++; break;
+                case 'e': cont_letras[4]++; break;
+                case 'f': cont_letras[5]++; break;
+                case 'g': cont_letras[6]++; break;
+                case 'h': cont_letras[7]++; break;
+                case 'i': cont_letras[8]++; break;
+                case 'j': cont_letras[9]++; break;
+                case 'k': cont_letras[10]++; break;
+                case 'l': cont_letras[11]++; break;
+                case 'm': cont_letras[12]++; break;
+                case 'n': cont_letras[13]++; break;
+                case 'o': cont_letras[14]++; break;
+                case 'p': cont_letras[15]++; break;
+                case 'q': cont_letras[16]++; break;
+                case 'r': cont_letras[17]++; break;
+                case 's': cont_letras[18]++; break;
+                case 't': cont_letras[19]++; break;
+                case 'u': cont_letras[20]++; break;
+                case 'v': cont_letras[21]++; break;
+                case 'x': cont_letras[22]++; break;
+                case 'w': cont_letras[23]++; break;
+                case 'y': cont_letras[24]++; break;
+                case 'z': cont_letras[25]++; break;
+
+            }
+           }
+
+           for(var i = 0; i<=(cont_letras.length-1);i++) {
+
+                if(cont_letras[i] > maior_letra) {
+
+                    maior_letra = cont_letras[i];
+                }
+           }
+
+           for(i = 0; i<=(cont_letras.length-1);i++) {
+
+            if(maior_letra == cont_letras[i]) {
+
+                dif = i;
+            }
+            }
+
+            console.log(dif);
+            for(i = 0; i<=(msg.length-1); i++){
+
+                for(var u=0; u<=(alphabet.length-1); u++){
+                    
+                    if(msg[i]==alphabet[u]){
+
+                        console.log(alphabet[(u-dif)%26]);
+
+                        if(u-dif < 0){
+
+                            decript=decript+alphabet[(u-dif+26)];
+
+                        } else
+                    
+                decript=decript+alphabet[(u-dif)];
+                    }
+                }
+                }       
+                console.log(decript);   
+           document.getElementById("cripto").value = decript;
+        }
+
+        function replaceByIndex(str, index, replacement) {
+    return str.substr(0, index) + replacement + str.substr(index + replacement);
+}
+
+    </script>
+</body>
+</html>
